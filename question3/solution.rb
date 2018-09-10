@@ -37,17 +37,20 @@ module MOGOInterview
       ::CSV.foreach(path).map.with_index(1) do |rows, i|
         shape = rows[0]
         side = rows[1]
-        Formater.call(i, shape,  side.to_i)
+        Formater.call(i, shape,  side.to_f)
       end
     end
   end
 
   class Formater
     def self.call(index, shape, side)
-      perimeter = Formula.perimeter(shape, side).round(2)
-      area      = Formula.area(shape, side).round(2)
+      perimeter = Formula.perimeter(shape, side)
+      area      = Formula.area(shape, side)
       dimension = 'side length'
       dimension = 'a raius of' if shape == 'circle'
+
+      return "calculation not available" if perimeter == 0 && area == 0
+
       "Shape #{index} is a #{shape}, with #{dimension} #{side}, having a"\
       " perimeter of #{perimeter} and an area of #{area} units square."
     end
@@ -55,21 +58,23 @@ module MOGOInterview
 
   class Formula
     def self.perimeter(shape, side)
-      case shape
+      case shape.downcase
       when 'square'   then 4 * side
       when 'pentagon' then 5 * side
       when 'triangle' then 3 * side
       when 'circle'   then 2 * Math::PI * side
-      end
+      else 0
+      end.round(2)
     end
 
     def self.area(shape, side)
       case shape
       when 'square'   then side * side
-      when 'pentagon' then (1/4) * Math.sqrt(5 * (5 + 2 * Math.sqrt(5))) * (side * side)
+      when 'pentagon' then (1.to_f/4.to_f) * ((Math.sqrt(5 * (5 + 2 * Math.sqrt(5)))) * (side * side))
       when 'triangle' then (side * Math.sqrt(3)) / 2 # Assuming its an equilateral triangle
       when 'circle'   then Math::PI * (side * side)
-      end
+      else 0
+      end.round(2)
     end
   end
 end
