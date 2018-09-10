@@ -64,3 +64,6 @@ module MOGOInterview
 end
 
 puts MOGOInterview::Query.new.dogs_and_bones_report.inspect
+
+# $ ruby question2.rb
+

@@ -4,16 +4,16 @@ create database mogo_interview;
 \connect mogo_interview;
 
 CREATE TABLE dogs (
-    id         SERIAL,
-    name       varchar(25),
-    age        integer
+  id         SERIAL,
+  name       varchar(25),
+  age        integer
 );
 
 CREATE TABLE bones (
-    id            SERIAL,
-    dog_id        integer,
-    animal_type   varchar(25),
-    rating        integer
+  id            SERIAL,
+  dog_id        integer,
+  animal_type   varchar(25),
+  rating        integer
 );
 
 INSERT INTO dogs(id, name, age) VALUES(DEFAULT, 'Max',  2);
